@@ -1,37 +1,27 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import { test as userTest } from 'api/user'
+// import { test as userTest } from 'api/user'
 import React from 'react';
-import {useState , useEffect} from 'react'
-import { HashRouter, Route, Switch } from 'react-router-dom'
+// import {useState , useEffect} from 'react'
+import { HashRouter, Route, Routes } from 'react-router-dom'
+import routes from 'utils/router'
 
 function App() {
-  const [name, setName] = useState(null);
-  const [testStr, setTestStr] = useState(null);
-  const getTestStr = async () => {
-    const res = await userTest();
-    setTestStr(res.data);
-    console.log(res.data);
-  }
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button onClick={getTestStr}></button>
-        <p>{testStr}</p>
-      </header>
-    </div>
+
+  return (<div>
+    <HashRouter>
+      <Routes>
+        {routes.map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={<route.component />}
+            exact={route.exact}
+          />
+        ))}
+      </Routes>
+    </HashRouter>
+  </div>
   );
 }
 
