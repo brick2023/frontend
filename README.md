@@ -6,6 +6,24 @@
 npm install
 ```
 
+## src 架構
+
+```bash
+.
+├── api
+├── assets
+│   ├── fonts
+│   └── images
+├── components
+│   ├── Footer
+│   └── Navbar
+├── pages
+│   ├── AboutPage
+│   ├── HomePage
+│   └── LoginPage
+└── utils
+```
+
 ## 檔案解釋
 
 - `jsconfig.json` 是用來設定 `import` 的路徑，這樣就不用一層一層的找檔案了
