@@ -1,0 +1,1 @@
+存放 api，對應到後端的 api，例如 `api/account.js` 對應到後端的 `http://後端url:port/account`、account.py。

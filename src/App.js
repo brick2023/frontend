@@ -1,7 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import { test as userTest } from 'api/user'
+import React from 'react';
+import {useState , useEffect} from 'react'
+import { HashRouter, Route, Switch } from 'react-router-dom'
 
 function App() {
+  const [name, setName] = useState(null);
+  const [testStr, setTestStr] = useState(null);
+  const getTestStr = async () => {
+    const res = await userTest();
+    setTestStr(res.data);
+    console.log(res.data);
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +28,8 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={getTestStr}></button>
+        <p>{testStr}</p>
       </header>
     </div>
   );
