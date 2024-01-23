@@ -1,4 +1,29 @@
-# Getting Started with Create React App
+# 使用說明
+
+## 安裝套件
+
+```
+npm install
+```
+
+## 檔案解釋
+
+- `jsconfig.json` 是用來設定 `import` 的路徑，這樣就不用一層一層的找檔案了
+- `package.json` 是用來設定套件的版本，以及一些指令
+- `package-lock.json` 是用來記錄套件的版本，不用管他
+- `public` 資料夾是放靜態檔案的地方，例如圖片、網頁的 icon
+- `src` 資料夾是放程式碼的地方
+- `src/App.js` 是 root component，也就是整個網頁的最外層
+- `src/index.js` 是整個網頁的進入點，也就是從這裡開始執行程式
+- `src/components` 資料夾是放 component 的地方，component 是可以重複使用的元件，例如按鈕、表格、輸入框等等
+- `src/pages` 資料夾是放 page 的地方，page 是網頁上的一個頁面，例如首頁、登入頁、註冊頁等等
+- `src/utils` 資料夾是放工具的地方，例如跟伺服器溝通的 API、驗證資料的函式等等
+- `src/pages/xxx/index.js` 是一個頁面的進入點，也就是從這裡開始執行程式
+
+
+以下都是預設的說明
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
