@@ -3,7 +3,7 @@ import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginModal from "components/LoginModal";
 
-const Navbar = () => {
+const Navbar = ({setIsLogin}) => {
     const [showLoginModal, toggleLoginModal] = useModal(false);
     return <div>
         <nav class="navbar sticky-top bg-body-tertiary navbar-design">
@@ -17,7 +17,7 @@ const Navbar = () => {
                 </button>
             </div>
         </nav>
-        <LoginModal show={showLoginModal} onClose={toggleLoginModal} />
+        <LoginModal show={showLoginModal} onClose={toggleLoginModal} setIsLogin={setIsLogin} />
     </div>
 };
 

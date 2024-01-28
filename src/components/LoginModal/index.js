@@ -4,20 +4,20 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import api from "api/account";
 
-const LoginModal = ({ show, onClose }) => {
+const LoginModal = ({ show, onClose , setIsLogin }) => {
 
     const [account, setAccount] = useState('');
     const [password, setPassword] = useState('');
     const [loginStatus, setLoginStatus] = useState('');
     const [jwt, setJwt] = useState(''); // jwt token
 
+    // 因為非同步的關係，所以 jwt 會在下一次 render 時才會改變，所以這裡要用 useEffect
     useEffect(() => {
         if (jwt) {
             localStorage.setItem('jwt', jwt);
             console.log(jwt);
         }
     }, [jwt]); // 只有當 jwt 改變時才會觸發
-
 
     const handleLogin = async () => {
         const res = await api.post('/login', {
@@ -26,13 +26,13 @@ const LoginModal = ({ show, onClose }) => {
         });
 
         const loginMessage = res.data.message;
-        console.log(loginMessage);
 
         // set login status if 0 then login success, 1 no account, 2 password error
         if (loginMessage === 0) {
             setLoginStatus('登入成功');
-            setJwt(res.data.jwt.access_token);
-            localStorage.setItem('jwt', jwt);
+            const jwtToken = res.data.jwt.access_token;
+            setJwt(jwtToken);
+            setIsLogin(true);
         } else if (loginMessage === 1) {
             setLoginStatus('無此帳號');
         } else if (loginMessage === 2) {
