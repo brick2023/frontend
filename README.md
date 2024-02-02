@@ -38,6 +38,19 @@ npm install
 - `src/utils` 資料夾是放工具的地方，例如跟伺服器溝通的 API、驗證資料的函式等等
 - `src/pages/xxx/index.js` 是一個頁面的進入點，也就是從這裡開始執行程式
 
+## 常見問題
+
+如果你的問題出現以下的樣子
+
+![](https://i.imgur.com/Bg0UHV9.png)
+
+參考：https://github.com/webpack/webpack/issues/14532
+
+設定環境變數
+
+```bash
+export NODE_OPTIONS=--openssl-legacy-provider
+```
 
 以下都是預設的說明
 
