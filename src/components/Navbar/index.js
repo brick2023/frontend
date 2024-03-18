@@ -6,12 +6,12 @@ import LoginModal from "components/LoginModal";
 const Navbar = ({setIsLogin}) => {
     const [showLoginModal, toggleLoginModal] = useModal(false);
     return <div>
-        <nav class="navbar sticky-top bg-body-tertiary navbar-design">
-            <div class="container-fluid">
-                <div class="navbar-llama-relative-box">
+        <nav className="navbar sticky-top bg-body-tertiary navbar-design">
+            <div className="container-fluid">
+                <div className="navbar-llama-relative-box">
                     <img src="https://cdn-icons-png.flaticon.com/128/3698/3698586.png" alt="Logo" class="navbar-llama" />
                 </div>
-                <p class="navbar-title">NCKU Self-Learning</p>
+                <p className="navbar-title">NCKU Self-Learning</p>
                 <button type="button" onClick={toggleLoginModal}>
                     Log In
                 </button>

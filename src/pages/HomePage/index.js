@@ -1,7 +1,7 @@
 import React from "react";
 import Features from "./features";
+import Home from "./home";
 import Navbar from "components/Navbar";
-import Footer from "components/Footer";
 import { useState, useEffect } from "react";
 
 const HomePage = () => {
@@ -15,10 +15,8 @@ const HomePage = () => {
 
     return <div>
         <Navbar setIsLogin={setIsLogin} />
-        {isLogin ? <p>已登入</p> : <Features />}
-        <Footer />
+        {isLogin ? <Home /> : <Features />}
     </div>;
 };
-
 
 export default HomePage;

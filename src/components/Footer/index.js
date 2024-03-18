@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 // Create styled components
 const FooterContainer = styled.footer`
+    margin-top: auto;
     background-color: rgb(172, 172, 172);
     display: flex;
     align-items: center;
     padding: 10px;
-    bottom: 0;
     font-family: Arial, Helvetica, sans-serif;
 `;
 
@@ -22,10 +22,11 @@ const FooterContent = styled.div`
 
 const FooterInfo = styled.p`
     margin-bottom: 5px;
+    text-align: left;
 `;
 
 const Footer = () => {
-    return <div>
+    return (
         <FooterContainer>
             <FooterLogo src="https://cdn-icons-png.flaticon.com/128/3698/3698586.png" alt="Logo" id="footer-logo" />
             <FooterContent>
@@ -43,7 +44,7 @@ const Footer = () => {
                 <FooterInfo>Contact us : caladmin@ismp.csie.ncku.edu.tw</FooterInfo>
             </FooterContent>
         </FooterContainer>
-    </div>;
+    );
 }
 
 export default Footer;
