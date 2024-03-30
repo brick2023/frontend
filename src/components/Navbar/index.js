@@ -9,7 +9,7 @@ const Navbar = ({setIsLogin}) => {
         <nav className="navbar sticky-top bg-body-tertiary navbar-design">
             <div className="container-fluid">
                 <div className="navbar-llama-relative-box">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3698/3698586.png" alt="Logo" class="navbar-llama" />
+                    <img src="https://cdn-icons-png.flaticon.com/128/3698/3698586.png" alt="Logo" className="navbar-llama" />
                 </div>
                 <p className="navbar-title">NCKU Self-Learning</p>
                 <button type="button" onClick={toggleLoginModal}>
