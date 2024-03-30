@@ -1,20 +1,16 @@
 import React from "react";
 import Features from "./features";
 import Home from "./home";
-import Navbar from "components/Navbar";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-const HomePage = () => {
-
-    const [isLogin, setIsLogin] = useState(false);
+const HomePage = ({isLogin, setIsLogin}) => {
 
     useEffect(() => {
         const jwtFromLocalStorage = localStorage.getItem('jwt');
         setIsLogin(jwtFromLocalStorage ? true : false);
-    }, []); 
+    }, [setIsLogin]); 
 
     return <div>
-        <Navbar setIsLogin={setIsLogin} />
         {isLogin ? <Home /> : <Features />}
     </div>;
 };
