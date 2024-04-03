@@ -1,22 +1,26 @@
 import React from "react";
 import ReactPlayer from "react-player";
 import { useEffect } from "react";
+// import user api test to get video
+import { getTest } from "api/user";
 
 const VideoPage = () => {
     
     const [videoUrl, setVideoUrl] = React.useState('');
 
     useEffect(() => {
-        fetch('http://localhost:8000/user/test')
-            .then(response => response.blob ())
-            .then(blob => {
-                const url = URL.createObjectURL(blob);
+        // async get Test video
+        async function fetchVideo() {
+            try {
+                const response = await getTest();
+                const url = URL.createObjectURL(response.data);
                 setVideoUrl(url);
-            })
-            .catch((error) => {
+                console.log(url);
+            } catch (error) {
                 console.error('Error fetching or processing video:', error);
             }
-        );
+        }
+        fetchVideo();
     }, []);
 
     return (

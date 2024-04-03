@@ -2,9 +2,9 @@
 import axios from 'axios'
 
 const userApi = axios.create({
-    baseURL: 'http://localhost:8000/user',
+    baseURL: 'http://brick2.yenslife.top:2023/user',
 })
 
 export const getUserName = () => userApi.get('/name')
 export const getUserEmail = () => userApi.get('/email')
-export const test = () => userApi.get('/test')
+export const getTest = () => userApi.get('/test', { responseType: 'blob' }) // 用來測試回傳影片 (blob 表示 binary 資料)
