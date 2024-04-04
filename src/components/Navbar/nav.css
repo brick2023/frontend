@@ -1,0 +1,46 @@
+.navbar-design {
+    background: linear-gradient(to bottom, rgba(255, 149, 125, 0.7), rgba(251, 178, 162, 0.3));
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navbar-llama {
+    width: 72px;
+    height: 72px;
+    display: inline-block;
+    position: absolute;
+    top: -2px;
+    filter: invert(100%); 
+}
+
+.navbar-title {
+    display: inline;
+    color: white;
+    font-size: 45px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+     margin-left: 120px;
+    margin-bottom: 0;
+}
+
+.search-form-design {
+    height: 40px;
+    width: 500px;
+    border-radius: 10px;
+    border: #FF9882 4px solid;
+    padding-right: 5px;
+}
+
+.search-button {
+    background-color: #FF9882;
+    border-radius: 8px;
+    border: none;
+    position: relative;
+    left: -15px;
+}
+
+.search-icon {
+    width: 50px;
+    height: 50px;
+    filter: invert(100%);
+}
