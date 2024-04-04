@@ -1,17 +1,18 @@
 import React from "react";
 import ReactPlayer from "react-player";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // import user api test to get video
 import { getTest } from "api/user";
 
 const VideoPage = () => {
     
-    const [videoUrl, setVideoUrl] = React.useState('');
+    const [videoUrl, setVideoUrl] = useState('');
 
     useEffect(() => {
         // async get Test video
         async function fetchVideo() {
             try {
+                console.log('fetching video');
                 const response = await getTest();
                 const url = URL.createObjectURL(response.data);
                 setVideoUrl(url);
@@ -30,8 +31,10 @@ const VideoPage = () => {
                 <ReactPlayer 
                     // url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                     url = {videoUrl}
+                    // url = "http://brick2.yenslife.top:2023/user/test"
                     playing={true}
                     controls={true}
+                    preload="auto"
                 />
             </div>
         </div>

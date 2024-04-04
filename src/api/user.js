@@ -3,6 +3,10 @@ import axios from 'axios'
 
 const userApi = axios.create({
     baseURL: 'http://brick2.yenslife.top:2023/user',
+    // Bearer token
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+    }
 })
 
 export const getUserName = () => userApi.get('/name')
