@@ -3,13 +3,18 @@ import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './nav.css';
 import LoginModal from "components/LoginModal";
+import api from "api/search";
 
 const Navbar = ({setIsLogin}) => {
     const [showLoginModal, toggleLoginModal] = useModal(false);
 
-    const search = (formData) => {
-        const query = formData.get('query');
-        alert(`Search: ${query}`);
+    // async search
+    const search = async (e) => {
+        e.preventDefault();
+        const query = e.target.query.value;
+        const res = await api(query);
+        const data = res.data;
+        console.log(data);
     }
 
     return <div>
@@ -20,7 +25,7 @@ const Navbar = ({setIsLogin}) => {
                     <p className="navbar-title">NCKU Self-Learning</p>
                 </div>
 
-                <form action={search}>
+                <form onSubmit={search}>
                     <input name="query" placeholder="Search" className="search-form-design" />
                     <button type="submit" className="search-button">
                         <img className="search-icon" src="https://cdn-icons-png.flaticon.com/512/10385/10385257.png" alt="Search" />
