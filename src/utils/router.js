@@ -5,7 +5,7 @@ import VideoPage from 'pages/VideoPage';
 
 const routes = [
   { path: '/', component: HomePage, exact: true },
-  { path: '/about', component: AboutPage },
+  { path: '/profile', component: AboutPage },
   { path: '/video', component: VideoPage },
 ];
 

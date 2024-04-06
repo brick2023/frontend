@@ -16,7 +16,7 @@ function App() {
   return (
   <div className='App'>
     <HashRouter>
-      <Navbar setIsLogin={setIsLogin} />
+      <Navbar isLogin={isLogin} setIsLogin={setIsLogin} />
       <Routes>
         {routes.map((route) => (
           <Route

@@ -1,12 +1,24 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 import './nav.css';
 import LoginModal from "components/LoginModal";
 import api from "api/search";
 
-const Navbar = ({setIsLogin}) => {
+const Navbar = ({isLogin, setIsLogin}) => {
     const [showLoginModal, toggleLoginModal] = useModal(false);
+    const [openProfile, setOpenProfile] = useState(false);
+    const navigate = useNavigate();
+
+    const handleProfileClick = () => {
+        setOpenProfile(!openProfile);
+        navigate('/profile');
+    }
+
+    const handleBackToHome = () => {
+        navigate('/');
+    }
 
     // async search
     const search = async (e) => {
@@ -17,10 +29,39 @@ const Navbar = ({setIsLogin}) => {
         console.log(data);
     }
 
+    // Button before Login
+    const BeforeLogin = () => {
+        return (
+            <Button variant="outline-light" onClick={toggleLoginModal}>
+                Login
+            </Button>
+        );
+    }
+
+    const DropDownProfile = () => {
+        return (
+            <div className="dropDownProfile">
+                <ul>
+                    <li onClick={handleProfileClick} > Profile </li>
+                    <li> Log Out </li>
+                </ul>
+            </div>
+        );
+    }
+    
+    // Button after Login
+    const AfterLogin = () => {
+        return (
+            <button className="user-btn" onClick={ () => setOpenProfile(!openProfile) }>
+                <img class="user-icon" src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="User" />
+            </button>    
+        );
+    }
+
     return <div>
-        <nav className="navbar sticky-top bg-body-tertiary navbar-design">
+        <nav className="navbar navbar-design">
             <div className="container-fluid">
-                <div className="navbar-brand">
+                <div className="navbar-brand" onClick={handleBackToHome}>
                     <img src="https://cdn-icons-png.flaticon.com/128/3698/3698586.png" alt="Logo" className="navbar-llama" />
                     <p className="navbar-title">NCKU Self-Learning</p>
                 </div>
@@ -32,12 +73,11 @@ const Navbar = ({setIsLogin}) => {
                     </button>
                 </form>
 
-                <button type="button" onClick={toggleLoginModal}>
-                    Log In
-                </button>
+                {isLogin ? <AfterLogin /> : <BeforeLogin />}
             </div>
         </nav>
         <LoginModal show={showLoginModal} onClose={toggleLoginModal} setIsLogin={setIsLogin} />
+        { openProfile && <DropDownProfile /> }
     </div>
 };
 
