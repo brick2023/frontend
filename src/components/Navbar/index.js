@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import './nav.css';
 import LoginModal from "components/LoginModal";
-import api from "api/search";
 
 const Navbar = ({isLogin, setIsLogin}) => {
     const [showLoginModal, toggleLoginModal] = useModal(false);
@@ -21,12 +20,10 @@ const Navbar = ({isLogin, setIsLogin}) => {
     }
 
     // async search
-    const search = async (e) => {
+    const search = (e) => {
         e.preventDefault();
         const query = e.target.query.value;
-        const res = await api(query);
-        const data = res.data;
-        console.log(data);
+        navigate('/search', { state: { query } });
     }
 
     // Button before Login

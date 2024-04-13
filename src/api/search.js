@@ -7,5 +7,5 @@ const searchApi = axios.create({
     },
 });
 // search keyword in input
-const searchKeyword = (keyword) => searchApi.get(`?keyword=${keyword}`);
-export default searchKeyword;
+export const searchKeyword = (keyword) => searchApi.get(`/summary?keyword=${keyword}`);
+export const searchSrt = (keyword) => searchApi.get(`/srt?keyword=${keyword}`);
