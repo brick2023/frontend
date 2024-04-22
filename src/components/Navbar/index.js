@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 import './nav.css';
 import LoginModal from "components/LoginModal";
 
@@ -13,6 +12,13 @@ const Navbar = ({isLogin, setIsLogin}) => {
     const handleProfileClick = () => {
         setOpenProfile(!openProfile);
         navigate('/profile');
+    }
+
+    const handleLogOutClick = () => {
+        setOpenProfile(!openProfile);
+        localStorage.removeItem('jwt');
+        setIsLogin(false);
+        navigate('/');
     }
 
     const handleBackToHome = () => {
@@ -29,9 +35,9 @@ const Navbar = ({isLogin, setIsLogin}) => {
     // Button before Login
     const BeforeLogin = () => {
         return (
-            <Button variant="outline-light" onClick={toggleLoginModal}>
+            <button className="login-btn" onClick={toggleLoginModal}>
                 Login
-            </Button>
+            </button>
         );
     }
 
@@ -40,7 +46,7 @@ const Navbar = ({isLogin, setIsLogin}) => {
             <div className="dropDownProfile">
                 <ul>
                     <li onClick={handleProfileClick} > Profile </li>
-                    <li> Log Out </li>
+                    <li onClick={handleLogOutClick} > Log Out </li>
                 </ul>
             </div>
         );

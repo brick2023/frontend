@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import api from "api/account";
+import './modal.css';
 
 const LoginModal = ({ show, onClose , setIsLogin }) => {
 
@@ -10,6 +10,15 @@ const LoginModal = ({ show, onClose , setIsLogin }) => {
     const [password, setPassword] = useState('');
     const [loginStatus, setLoginStatus] = useState('');
     const [jwt, setJwt] = useState(''); // jwt token
+
+    // Use additional function 'handleClose' instead of onClose is because 
+    // I want to clear the input value and login status when close the modal.
+    const handleClose = () => {
+        onClose();
+        setAccount('');
+        setPassword('');
+        setLoginStatus('');
+    }
 
     // 因為非同步的關係，所以 jwt 會在下一次 render 時才會改變，所以這裡要用 useEffect
     useEffect(() => {
@@ -41,23 +50,27 @@ const LoginModal = ({ show, onClose , setIsLogin }) => {
     }
 
     return (
-        <Modal show={show} onHide={onClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>登入</Modal.Title>
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header className="modal-header">
+                <img className="modal-header-img" src="https://cdn-icons-png.flaticon.com/128/3698/3698586.png" alt="icon" />
+                <Modal.Title className="modal-title"> NCKU Self-Learning </Modal.Title>
+                <button class="modal-close-btn" onClick={handleClose}> &#9747; </button>
             </Modal.Header>
             <Modal.Body>
-                <input type="text" placeholder="帳號" value={account} onChange={(e) => setAccount(e.target.value)} />
-                <input type="password" placeholder="密碼" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <p>登入狀態：{loginStatus}</p>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={onClose}>
-                    關閉
-                </Button>
-                <Button variant="primary" onClick={handleLogin}>
+                <img className="llama-img" src="llama_head.png" alt="llama" />
+                <div className="input-content">
+                    <input className="username-input" type="text" placeholder="帳號" value={account} 
+                        onChange={(e) => setAccount(e.target.value)} />
+                    <input className="password-input" type="password" placeholder="密碼" value={password} 
+                        onChange={(e) => setPassword(e.target.value)} />
+                    { loginStatus !== '' && <p>登入狀態：{loginStatus}</p> }
+                </div>
+                <button className="login-button" onClick={handleLogin}>
                     登入
-                </Button>
-            </Modal.Footer>
+                </button>
+            </Modal.Body>
+            {/* Not using Modal.Footer is because it will have an ugly line between
+             Modal.Body and Modal.Footer. */}
         </Modal>
     );
 };
