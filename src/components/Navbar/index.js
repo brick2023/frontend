@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './nav.css';
+import api from "api/security";
 import LoginModal from "components/LoginModal";
 
 const Navbar = ({isLogin, setIsLogin}) => {
     const [showLoginModal, toggleLoginModal] = useModal(false);
     const [openProfile, setOpenProfile] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleLogin = async () => {
+            // verify jwt token
+            const res = await api.post('/verify_token', {
+                jwt: localStorage.getItem('jwt'),
+            });
+
+            const verify_message = res.data;
+            setIsLogin(verify_message === 'ok' ? true : false);
+        }
+        
+        handleLogin();
+        
+    }, [setIsLogin]); 
 
     const handleProfileClick = () => {
         setOpenProfile(!openProfile);

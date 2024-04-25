@@ -22,7 +22,7 @@ function App() {
           <Route
             key={route.path}
             path={route.path}
-            element={<route.component isLogin={isLogin} setIsLogin={setIsLogin}/>}
+            element={<route.component isLogin={isLogin}/>}
             exact={route.exact}
           />
         ))}
