@@ -28,6 +28,7 @@ const Navbar = ({isLogin, setIsLogin}) => {
     const handleProfileClick = () => {
         setOpenProfile(!openProfile);
         navigate('/profile');
+        navigate(0); // refresh the page
     }
 
     const handleLogOutClick = () => {

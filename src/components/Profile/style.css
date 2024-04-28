@@ -103,6 +103,55 @@
   padding: 50px 35px 0 35px;
 }
 
+.lessons-block {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.lesson-name-and-watchtime {
+  width: 50%;
+  background-color: #d2d2d2;
+  border: white 1px solid;
+  border-radius: 5px;
+  padding: 0 10px 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 25%);
+}
+
+.lesson-name {
+  flex: 4;
+  text-align: center;
+}
+
+.divide-line {
+  font-size: 44px;
+  font-weight: lighter;
+  color: #A6A5A5;
+  text-align: center;
+  flex: 1;
+  position: relative;
+  bottom: 2px;
+}
+
+.lesson-total-watch-time {
+  text-align: center;
+  font-size: 18px;
+  text-align: center;
+  flex: 6;
+  padding-left: 30px;
+}
+
+.watch-time-pr-progress-bar {
+  width: 380px;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
 /* watching behaviors */
 .watching-behaviors-info {
   width: 100%;
@@ -138,7 +187,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding-top: 60px;
+  padding: 60px 35px 0 35px;
 }
 
 .scroll-back-times {
@@ -147,4 +196,20 @@
 
 .pause-times {
   background-image: url("/pause.png");
+}
+
+.behavior-lessons-block {
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.behavior-lesson-name {
+  text-align: center;
+  background-color: rgba(153, 153, 153, 35%);
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 25%);
+  border: white 1px solid;
+  border-radius: 5px;
+  width: 180px;
+  padding: 5px 10px 5px 10px;
+  font-size: 20px;
 }

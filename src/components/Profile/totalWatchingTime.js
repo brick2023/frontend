@@ -1,5 +1,11 @@
 import React from 'react';
+import ProgressBar from './ProgressBar';
 import './style.css';
+
+//Create a function that get a random integer between 0 to 100 and return the number with type string
+const getRandom = () => {
+    return Math.floor(Math.random() * 100).toString();
+}
 
 const CourseInfoTitle = () => {
     return (
@@ -21,12 +27,29 @@ const CourseInfoTitle = () => {
     );
 }
 
-const TotalWatchingTime = () => {
+const Lessons = ({ name }) => {
+    return (
+        <div className='lessons-block'>
+            <div className='lesson-name-and-watchtime'>
+                <div className='lesson-name'>
+                    <a href='#'> {name} </a>
+                </div>
+                <span className='divide-line'> &#124; </span>
+                <span className='lesson-total-watch-time'> 00:00:00 </span>
+            </div>
+            <ProgressBar bgcolor="#FFF5D0" progress={getRandom()} height={15} />
+        </div>
+    );
+}
+
+const TotalWatchingTime = ({ studentLessons }) => {
     return (
         <div className="total-watching-time-info">
             <CourseInfoTitle />
-            <div className='student-course-watch'>
-                
+            <div className='student-courses-watch'>
+                { studentLessons.map((lesson) => {
+                    return <Lessons name={lesson.lesson_name} key={lesson.lesson_id} />
+                })}
             </div>
         </div>
     );
