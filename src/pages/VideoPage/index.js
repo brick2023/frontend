@@ -3,7 +3,10 @@ import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 // import user api test to get video
 import { getTest } from "api/user";
+import Chatbot from "components/ChatBot/chatbot";
 
+// When the video thumbnail clicked in HomePage/home.js, it will pass the lesson's course_id to this page
+// But for now, home.js hasn't finished yet, so we just use a fixed course_id here
 const VideoPage = () => {
     
     const [videoUrl, setVideoUrl] = useState('');
@@ -37,6 +40,7 @@ const VideoPage = () => {
                     preload="auto"
                 />
             </div>
+            <Chatbot course_id={4} />
         </div>
     );
 };
