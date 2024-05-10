@@ -47,6 +47,7 @@ const Navbar = ({isLogin, setIsLogin}) => {
         e.preventDefault();
         const query = e.target.query.value;
         navigate('/search', { state: { query } });
+        navigate(0);
     }
 
     // Button before Login
@@ -73,7 +74,7 @@ const Navbar = ({isLogin, setIsLogin}) => {
     const AfterLogin = () => {
         return (
             <button className="user-btn" onClick={ () => setOpenProfile(!openProfile) }>
-                <img class="user-icon" src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="User" />
+                <img className="user-icon" src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="User" />
             </button>    
         );
     }

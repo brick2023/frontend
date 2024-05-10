@@ -54,7 +54,7 @@ const LoginModal = ({ show, onClose , setIsLogin }) => {
             <Modal.Header className="modal-header">
                 <img className="modal-header-img" src="https://cdn-icons-png.flaticon.com/128/3698/3698586.png" alt="icon" />
                 <Modal.Title className="modal-title"> NCKU Self-Learning </Modal.Title>
-                <button class="modal-close-btn" onClick={handleClose}> &#9747; </button>
+                <button className="modal-close-btn" onClick={handleClose}> &#9747; </button>
             </Modal.Header>
             <Modal.Body>
                 <img className="llama-img" src="llama_head.png" alt="llama" />

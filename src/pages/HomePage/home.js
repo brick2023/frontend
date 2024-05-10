@@ -7,6 +7,7 @@ const Home = () => {
 
     const handleImageClick = () => {
         navigate('/video');
+        navigate(0);
     };
 
     return (
