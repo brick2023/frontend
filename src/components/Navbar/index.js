@@ -40,6 +40,7 @@ const Navbar = ({isLogin, setIsLogin}) => {
 
     const handleBackToHome = () => {
         navigate('/');
+        navigate(0);
     }
 
     // async search
