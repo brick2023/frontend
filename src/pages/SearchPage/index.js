@@ -1,14 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from "react-router-dom";
-import './style.css';
+import { useNavigate, useLocation } from "react-router-dom";
 import { searchKeyword, searchSrt} from "api/search";
+import './style.css';
+
+
+const Srt = ({ srt, lesson_id}) => {
+    const navigate = useNavigate();
+    // If the srt is clicked, navigate to the video page and pass lesson_id.
+    const handleSrtClick = () => {
+        navigate('/video', { lesson_id: {lesson_id} })
+    }
+
+    return (
+        <div className='srt-content'>
+            <div className='srt-content' onClick={handleSrtClick}>
+                {srt[0] + ' ' + srt[1]}
+            </div>
+        </div>
+    );
+}
 
 // Video srt component
-const Srt = ({srts}) => {
+const Srts = ({srts, lesson_id}) => {
     return (
         <div className='video-srt'>
             { srts.map((srt, index) => {
-                return (<a href='#' key={index}> {srt} </a>);
+                return (
+                    <Srt srt={srt} lesson_id={lesson_id} key={index}/>
+                );
             })}
         </div>
     );
@@ -16,14 +35,20 @@ const Srt = ({srts}) => {
 
 const VideoCard = ({expand, title, id, srt}) => {
     return (
-        <div className='video-card' key={id}>
+        <div className='video-card'>
             <img className='video-thumbnail' 
             src='https://cdn-icons-png.flaticon.com/512/1601/1601400.png' alt='video-thumbnail'/>
             <div className='video-description'>
                 <h3><b> {title} </b></h3>
             </div>
-            { expand ? <Srt srts={srt} /> : null }
+            { expand ? <Srts srts={srt} lesson_id={id} /> : null }
         </div>
+    );
+}
+
+const Loader = () => {
+    return (
+        <div className="loader"></div>
     );
 }
 
@@ -32,13 +57,12 @@ const SearchPage = () => {
     const query = location.state.query;
     console.log(query);
 
-    const [searchSummary, setSearchSummary] = useState('Loading...');
+    const [searchSummary, setSearchSummary] = useState('');
     const [srts, setSrts] = useState([]);
     const [isExpand, setIsExpand] = useState(true);
 
     // Use useEffect to fetch data from search api and update the searchSummary state
     useEffect(() => {
-        document.getElementById("summary").innerHTML = 'Loading...';
         const fetchSummary = async () => {
             const res = await searchKeyword( query );
             const summary = res.data;
@@ -63,7 +87,7 @@ const SearchPage = () => {
                 <div className="search-content">
                     <h2 style={{ fontSize: 'bold' }}> 搜尋關鍵字 : { query } </h2>
                     <div className="search-result" id='summary'>
-                        { searchSummary }
+                        { searchSummary === '' ? <Loader /> : searchSummary}
                     </div>
                 </div>
             </div>
@@ -74,7 +98,7 @@ const SearchPage = () => {
             </div>
             <div className='video-card-container'>
                 { srts.map((srt) => {
-                    return (<VideoCard expand={isExpand} title={srt.name} id={srt.id} srt={srt.srt}/>);
+                    return (<VideoCard expand={isExpand} title={srt.name} id={srt.id} srt={srt.srt} key={srt.id} />);
                 })}
             </div>
             

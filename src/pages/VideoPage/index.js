@@ -4,9 +4,14 @@ import { useEffect, useState } from "react";
 // import user api test to get video
 import { getTest } from "api/user";
 import { getVideo, getName, getTime } from "api/video";
+import Chatbot from "components/ChatBot/chatbot";
 
 const video_id = 15;
 
+
+
+// When the video thumbnail clicked in HomePage/home.js, it will pass the lesson's course_id to this page
+// But for now, home.js hasn't finished yet, so we just use a fixed course_id here
 const VideoPage = () => {
     
     const [videoUrl, setVideoUrl] = useState('');
@@ -67,6 +72,7 @@ const VideoPage = () => {
                     startTime={videoTime}
                 />
             </div>
+            <Chatbot course_id={4} />
         </div>
     );
 };

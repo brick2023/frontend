@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import Chatbot from './chatbot';
 
 const Home = () => {
     const navigate = useNavigate();
 
     const handleImageClick = () => {
         navigate('/video');
+        navigate(0);
     };
 
     return (
@@ -37,7 +37,6 @@ const Home = () => {
                 <img src="https://thumb.ac-illust.com/35/35f61f14dbe475df743fa2955a49ee3d_t.jpeg" alt="Video" onClick={handleImageClick} />
                 <img src="https://thumb.ac-illust.com/35/35f61f14dbe475df743fa2955a49ee3d_t.jpeg" alt="Video" onClick={handleImageClick} />
             </div>
-            <Chatbot />
           </main>
         </div>
     );
