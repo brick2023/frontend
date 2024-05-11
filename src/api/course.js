@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 // api for lesson
 const courseApi = axios.create({
@@ -9,5 +9,4 @@ const courseApi = axios.create({
     }
 })
 
-export const getLessons = () => courseApi.get('/lessons');
-export const getLessonInfo = (lesson_id) => courseApi.get(`/lesson/${lesson_id}`);
+export const getLessons = () => courseApi.get('/lessons')

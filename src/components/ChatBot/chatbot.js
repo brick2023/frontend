@@ -29,8 +29,7 @@ const GenerateResponse = ({ previousStep, triggerNextStep, course_id}) => {
             };
             fetchResponse();
         }
-        console.log(course_id);
-    }, [previousStep, triggerNextStep, course_id]);
+    }, [previousStep, triggerNextStep]);
 
     return chatbotResponse === '' ? < Loading /> : chatbotResponse;
 };
