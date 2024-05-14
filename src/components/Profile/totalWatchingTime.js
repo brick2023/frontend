@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import ProgressBar from './ProgressBar';
 import './style.css';
 
@@ -27,12 +28,18 @@ const CourseInfoTitle = () => {
     );
 }
 
-const Lessons = ({ name }) => {
+const Lessons = ({ id, name, course_id }) => {
+    const navigate = useNavigate();
+    const handleNavigate = () => {
+        navigate('/video', {state: { lesson_id: id, course_id: course_id}});
+        navigate(0);
+    }
+
     return (
         <div className='lessons-block'>
             <div className='lesson-name-and-watchtime'>
                 <div className='lesson-name'>
-                    <a href='#'> {name} </a>
+                    <div onClick={handleNavigate}> {name} </div>
                 </div>
                 <span className='divide-line'> &#124; </span>
                 <span className='lesson-total-watch-time'> 00:00:00 </span>
@@ -48,7 +55,7 @@ const TotalWatchingTime = ({ studentLessons }) => {
             <CourseInfoTitle />
             <div className='student-courses-watch'>
                 { studentLessons.map((lesson) => {
-                    return <Lessons name={lesson.lesson_name} key={lesson.lesson_id} />
+                    return <Lessons id={lesson.lesson_id} name={lesson.lesson_name} course_id={lesson.course_id} key={lesson.lesson_id} />
                 })}
             </div>
         </div>

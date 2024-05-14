@@ -26,6 +26,8 @@
     color: white;
     background-color: #FF9780;
     border-radius: 20px;
+    position: absolute;
+    right: 10px;
 }
 
 .llama-img {

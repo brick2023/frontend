@@ -4,11 +4,12 @@ import { searchKeyword, searchSrt} from "api/search";
 import './style.css';
 
 
-const Srt = ({ srt, lesson_id}) => {
+const Srt = ({ srt, lesson_id, course_id}) => {
     const navigate = useNavigate();
-    // If the srt is clicked, navigate to the video page and pass lesson_id.
+    // If the srt is clicked, navigate to the video page and pass lesson_id and course_id.
     const handleSrtClick = () => {
-        navigate('/video', { lesson_id: {lesson_id} })
+        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id }});
+        navigate(0);
     }
 
     return (
@@ -21,19 +22,19 @@ const Srt = ({ srt, lesson_id}) => {
 }
 
 // Video srt component
-const Srts = ({srts, lesson_id}) => {
+const Srts = ({srts, lesson_id, course_id}) => {
     return (
         <div className='video-srt'>
             { srts.map((srt, index) => {
                 return (
-                    <Srt srt={srt} lesson_id={lesson_id} key={index}/>
+                    <Srt srt={srt} lesson_id={lesson_id} course_id={course_id} key={index}/>
                 );
             })}
         </div>
     );
 }
 
-const VideoCard = ({expand, title, id, srt}) => {
+const VideoCard = ({expand, title, id, course_id, srt}) => {
     return (
         <div className='video-card'>
             <img className='video-thumbnail' 
@@ -41,7 +42,7 @@ const VideoCard = ({expand, title, id, srt}) => {
             <div className='video-description'>
                 <h3><b> {title} </b></h3>
             </div>
-            { expand ? <Srts srts={srt} lesson_id={id} /> : null }
+            { expand ? <Srts srts={srt} lesson_id={id} course_id={course_id} /> : null }
         </div>
     );
 }
@@ -98,7 +99,8 @@ const SearchPage = () => {
             </div>
             <div className='video-card-container'>
                 { srts.map((srt) => {
-                    return (<VideoCard expand={isExpand} title={srt.name} id={srt.id} srt={srt.srt} key={srt.id} />);
+                    return (<VideoCard expand={isExpand} 
+                        title={srt.name} id={srt.id} course_id={srt.course_id} srt={srt.srt} key={srt.id} />);
                 })}
             </div>
             

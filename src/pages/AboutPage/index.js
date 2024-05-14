@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./about.css";
 import {getUserName, getUserEmail} from "api/user";
-import {getLessons} from "api/course";
+import {getStudentLessons} from "api/course";
 import StudentInfo from "components/Profile/studentInfo";
 import WatchingBehaviors from "components/Profile/watchingBehaviors";
 import TotalWatchingTime from "components/Profile/totalWatchingTime";
@@ -36,7 +36,7 @@ const AboutPage = () => {
             setUserInfo({ name: name.data, email: email.data });
         }
         const fetchStudentLessons = async () => {
-            const lessons = await getLessons();
+            const lessons = await getStudentLessons();
             setStudentLessons(lessons.data);
             console.log(lessons);
         }
@@ -52,7 +52,9 @@ const AboutPage = () => {
             <div className="watching-infos">
                 <SwitchButtons setStatus={setStatus} />
                 <div className='behavior-infos'>
-                    { status === 0 ? <TotalWatchingTime studentLessons={studentLessons} /> : <WatchingBehaviors studentLessons={studentLessons}/> }
+                    { status === 0 ? 
+                        <TotalWatchingTime studentLessons={studentLessons} /> : 
+                        <WatchingBehaviors studentLessons={studentLessons}/> }
                 </div>
             </div>
         </div>
