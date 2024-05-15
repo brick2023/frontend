@@ -6,7 +6,8 @@ const Home = () => {
     const navigate = useNavigate();
 
     const handleImageClick = () => {
-        navigate('/video');
+        // HomePage haven't finished yet, so we just use a fixed lesson_id and course_id here
+        navigate('/video', { state: { lesson_id: 15, course_id: 4 }});
         navigate(0);
     };
 

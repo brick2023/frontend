@@ -13,6 +13,7 @@ const GenerateResponse = ({ previousStep, triggerNextStep, course_id}) => {
     const [chatbotResponse, setChatbotResponse] = useState('');
 
     useEffect(() => {
+        console.log('course_id:', course_id);
         if (previousStep && previousStep.value) {
             const fetchResponse = async () => {
                 try {
@@ -29,7 +30,7 @@ const GenerateResponse = ({ previousStep, triggerNextStep, course_id}) => {
             };
             fetchResponse();
         }
-    }, [previousStep, triggerNextStep]);
+    }, [previousStep, triggerNextStep, course_id]);
 
     return chatbotResponse === '' ? < Loading /> : chatbotResponse;
 };

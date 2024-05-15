@@ -40,6 +40,7 @@ const Navbar = ({isLogin, setIsLogin}) => {
 
     const handleBackToHome = () => {
         navigate('/');
+        navigate(0);
     }
 
     // async search
@@ -87,12 +88,14 @@ const Navbar = ({isLogin, setIsLogin}) => {
                     <p className="navbar-title">NCKU Self-Learning</p>
                 </div>
 
+                { isLogin ?
                 <form onSubmit={search}>
                     <input name="query" placeholder="Search" className="search-form-design" />
                     <button type="submit" className="search-button">
                         <img className="search-icon" src="https://cdn-icons-png.flaticon.com/512/10385/10385257.png" alt="Search" />
                     </button>
                 </form>
+                : null }
 
                 {isLogin ? <AfterLogin /> : <BeforeLogin />}
             </div>
