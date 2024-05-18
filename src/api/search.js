@@ -9,3 +9,4 @@ const searchApi = axios.create({
 // search keyword in input
 export const searchKeyword = (keyword) => searchApi.get(`/summary?keyword=${keyword}`);
 export const searchSrt = (keyword) => searchApi.get(`/srt?keyword=${keyword}`);
+export const getImage = (lesson_id) => searchApi.get(`/photo/${lesson_id}`, { responseType: "blob" });
