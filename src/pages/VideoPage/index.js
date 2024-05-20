@@ -44,6 +44,7 @@ const VideoPage = () => {
     const [relatedLessons, setRelatedLessons] = useState([]);
 
     const playerRef = useRef(null);
+    useNavigate(0);
 
     useEffect(() => {
         const fetchLessonInfo = async () => {
