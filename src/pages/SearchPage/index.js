@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { searchKeyword, searchSrt} from "api/search";
+import { searchKeyword, searchSrt, getImage} from "api/search";
 import './style.css';
 
 
@@ -34,15 +34,46 @@ const Srts = ({srts, lesson_id, course_id}) => {
     );
 }
 
+var id_image_exist_dict = {};
+
 const VideoCard = ({expand, title, id, course_id, srt}) => {
+    const [image, setImage] = useState('');
+    
+
+    const fetchImage = async () => {
+        console.log('fetch image');
+        try {
+            const response = await getImage(id); // Pass lesson_id instead of a fixed value
+            const blobURL = URL.createObjectURL(response.data);
+            setImage(blobURL);
+            console.log(blobURL);
+            id_image_exist_dict[id] = blobURL;
+        } catch (error) {
+            console.error('Error fetching image:', error);
+        }
+    };
+
+    if (id_image_exist_dict[id]) {
+        return (
+            <div className='video-card'>
+                <img className='video-thumbnail' src={id_image_exist_dict[id]} alt='video-thumbnail' />
+                <div className='video-description'>
+                    <h3><b> {title} </b></h3>
+                </div>
+                {expand ? <Srts srts={srt} lesson_id={id} course_id={course_id} /> : null}
+            </div>
+        );
+    }
+    fetchImage();
+    console.log(image);
+
     return (
         <div className='video-card'>
-            <img className='video-thumbnail' 
-            src='https://cdn-icons-png.flaticon.com/512/1601/1601400.png' alt='video-thumbnail'/>
+            <img className='video-thumbnail' src={image} alt='video-thumbnail' />
             <div className='video-description'>
                 <h3><b> {title} </b></h3>
             </div>
-            { expand ? <Srts srts={srt} lesson_id={id} course_id={course_id} /> : null }
+            {expand ? <Srts srts={srt} lesson_id={id} course_id={course_id} /> : null}
         </div>
     );
 }
@@ -77,8 +108,8 @@ const SearchPage = () => {
             console.log(srts);
         }
 
-        fetchSummary();
         fetchSrt();
+        fetchSummary();
     }, [query]);
 
     return (
