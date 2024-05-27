@@ -21,7 +21,6 @@ const Home = () => {
       const fetchCourseInfo = async () => {
         try {
           const response = await getCourseInfo(); // Ensure this function is defined and returns course IDs
-          const
           setCourseInfo(response.data); // Assuming the response data is the array of course IDs
         }catch (error) {
           console.error('Failed to fetch courseInfo', error);
