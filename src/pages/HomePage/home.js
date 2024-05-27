@@ -52,13 +52,6 @@ const Home = () => {
       
       fetchCourseInfo();
       fetchCourselessonInfo();
-
-
-
-
-
-      }   
-      fetchUserCourse();
     }, []);
 
 
