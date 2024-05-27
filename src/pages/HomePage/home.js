@@ -2,7 +2,7 @@ import React , { useState, useEffect }from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 // import Chatbot from './chatbot';
-import {getCourseInfo, getLessons ,getLessonForCourse} from "api/course"; 
+import {getCourseInfo, getLessons ,getLessonForCourse, getAllLesson} from "api/course"; 
 
 const Home = () => {
     const navigate = useNavigate();
@@ -29,13 +29,33 @@ const Home = () => {
     const [courseInfo, setCourseInfo] = useState([]);
 
     useEffect(() => {
-      const fetchUserCourse = async () => {
-          try {
-              const response = await getCourseInfo(); // Ensure this function is defined and returns course IDs
-              setCourseInfo(response.data); // Assuming the response data is the array of course IDs
-          } catch (error) {
-              console.error('Failed to fetch courseInfo', error);
-          }
+      const fetchCourseInfo = async () => {
+        try {
+          const response = await getCourseInfo(); // Ensure this function is defined and returns course IDs
+          setCourseInfo(response.data); // Assuming the response data is the array of course IDs
+        }catch (error) {
+          console.error('Failed to fetch courseInfo', error);
+        }
+      }
+      const fetchCourselessonInfo = async() => {      // try to dump the courses' lesson id
+        try{
+          const response = await getAllLesson(4);
+          const lessonsids = response.data.map(item => item.id);
+          console.log("hi",lessonsids);  
+
+        }catch(error){
+          console.error('Failed to fetch lessons', error);
+        }
+
+      }
+
+      
+      fetchCourseInfo();
+      fetchCourselessonInfo();
+
+
+
+
 
       }   
       fetchUserCourse();
