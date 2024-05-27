@@ -7,32 +7,38 @@ import {getCourseInfo, getLessons ,getLessonForCourse} from "api/course";
 const Home = () => {
     const navigate = useNavigate();
     //course 開闔
-    const [isExpanded, setIsExpanded] = useState(true);
-    const handleToggleExpand = () => {
-      setIsExpanded(prevState => !prevState);
-    };
+    // const [isExpanded, setIsExpanded] = useState(true);
+    // const handleToggleExpand = () => {
+    //   setIsExpanded(prevState => !prevState);
+    // };
     const handleImageClick = () => {
         navigate('/video');
     };
 
+    // 處理展開和關閉的函數
+
+  const [expandedStates, setExpandedStates] = useState({});
+  const handleToggleExpand = (courseId) => {
+    setExpandedStates(prevStates => ({
+      ...prevStates,
+      [courseId]: !prevStates[courseId]  // 切換當前課程的展開狀態
+    }));
+  };
+
+
     const [courseInfo, setCourseInfo] = useState([]);
 
     useEffect(() => {
-      const fetchCourseInfo = async () => {
+      const fetchUserCourse = async () => {
           try {
               const response = await getCourseInfo(); // Ensure this function is defined and returns course IDs
               setCourseInfo(response.data); // Assuming the response data is the array of course IDs
           } catch (error) {
               console.error('Failed to fetch courseInfo', error);
           }
-      }
 
-      
-      fetchCourseInfo();
-
-
-
-
+      }   
+      fetchUserCourse();
     }, []);
 
 
@@ -66,11 +72,11 @@ const Home = () => {
                         <h2 style={{ textAlign: 'left', marginBottom: 10, textShadow: '2px 2px 1px rgba(0,0,0,0.2)', marginLeft: 70 }}>
                           {course.course_name}
                           {course.id}
-                          <span onClick={handleToggleExpand} style={{ cursor: 'pointer', marginLeft: 10 }}>
-                            {isExpanded ? <span>&#9662;</span> : <span>&#9652;</span>}
+                          <span onClick={() => handleToggleExpand(course.id)} style={{ cursor: 'pointer', marginLeft: 10 }}>
+                            {expandedStates[course.id]? <span>&#9662;</span> : <span>&#9652;</span>}
                           </span>
                         </h2>
-                        {isExpanded && (
+                        {expandedStates[course.id] && (
                           <div className='videoRow' style={{ display: 'flex', overflowX: 'auto', maxWidth: '1240px', marginLeft: 70, scrollbarWidth: 'thin', scrollbarColor: '#d4cdcd #e0e0e0' }}>
                             <div className='videoCard' style={{ flex: 1, margin: '0 5px', backgroundColor: 'lightgrey', paddingBottom: 100, marginRight: 70, borderRadius: '7px', textShadow: '2px 2px 1px rgba(0,0,0,0.2)' }}>
                               <img src="https://thumb.ac-illust.com/35/35f61f14dbe475df743fa2955a49ee3d_t.jpeg" alt="Video" onClick={handleImageClick} style={{ borderRadius: '8px', width: '250px', height: '200px', padding: 20 }}/>
