@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 // api for lesson
 const courseApi = axios.create({
@@ -8,6 +8,11 @@ const courseApi = axios.create({
         Authorization: `Bearer ${localStorage.getItem('jwt')}`
     }
 })
+
+export const getLessons = () => courseApi.get('/')
+// for homepage
+export const getLessonsForCourse = (course_id) => courseApi.get(`/${course_id}`)
+export const getCourseInfo = () => courseApi.get('/')
 
 export const getStudentLessons = () => courseApi.get('/lessons');
 export const getLessonInfo = (lesson_id) => courseApi.get(`/lesson/${lesson_id}`);
