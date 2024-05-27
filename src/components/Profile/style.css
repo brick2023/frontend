@@ -123,6 +123,11 @@
 .lesson-name {
   flex: 4;
   text-align: center;
+  cursor: pointer;
+}
+
+.lesson-name:hover {
+  color: #FFF1C0;
 }
 
 .divide-line {
@@ -190,14 +195,6 @@
   padding: 60px 35px 0 35px;
 }
 
-.scroll-back-times {
-  background-image: url("/timer.png");
-}
-
-.pause-times {
-  background-image: url("/pause.png");
-}
-
 .behavior-lessons-block {
   display: flex;
   margin-bottom: 50px;
@@ -212,4 +209,9 @@
   width: 180px;
   padding: 5px 10px 5px 10px;
   font-size: 20px;
+  cursor: pointer;
+}
+
+.behavior-lesson-name:hover {
+  color: #FFF1C0;
 }

@@ -9,4 +9,11 @@ const courseApi = axios.create({
     }
 })
 
-export const getLessons = () => courseApi.get('/lessons')
+export const getLessons = () => courseApi.get('/')
+// for homepage
+export const getLessonsForCourse = (course_id) => courseApi.get(`/${course_id}`)
+export const getCourseInfo = () => courseApi.get('/')
+
+export const getStudentLessons = () => courseApi.get('/lessons');
+export const getLessonInfo = (lesson_id) => courseApi.get(`/lesson/${lesson_id}`);
+export const getAllLesson = (course_id) => courseApi.get(`/${course_id}`);
