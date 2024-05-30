@@ -2,20 +2,21 @@ import React , { useState, useEffect }from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 // import Chatbot from './chatbot';
-import {getCourseInfo, getLessons ,getLessonForCourse, getAllLesson} from "api/course"; 
+import {getCourseInfo, getLessons ,getLessonForCourse, getAllLesson, fetchUserCourse} from "api/course"; 
 
 const Home = () => {
-    const navigate = useNavigate();
-    //course 開闔
-    // const [isExpanded, setIsExpanded] = useState(true);
-    // const handleToggleExpand = () => {
-    //   setIsExpanded(prevState => !prevState);
-    // };
-    const handleImageClick = () => {
-        navigate('/video');
-    };
 
-    // 處理展開和關閉的函數
+  const navigate = useNavigate();
+  //course 開闔
+  // const [isExpanded, setIsExpanded] = useState(true);
+  // const handleToggleExpand = () => {
+  //   setIsExpanded(prevState => !prevState);
+  // };
+  const handleImageClick = () => {
+      navigate('/video');
+  };
+
+  // 處理展開和關閉的函數
 
   const [expandedStates, setExpandedStates] = useState({});
   const handleToggleExpand = (courseId) => {
@@ -32,33 +33,22 @@ const Home = () => {
       const fetchCourseInfo = async () => {
         try {
           const response = await getCourseInfo(); // Ensure this function is defined and returns course IDs
-          setCourseInfo(response.data); // Assuming the response data is the array of course IDs
+          const courseids = response.data.map(item => item.course_id);    // get courses_id and put into an array
+          for (let index = 0; index < courseids.length; index++) {        // go throught the array to get lessons_id
+            const response_2 = await getAllLesson(courseids[index]);   
+            const lessonsids = response_2.data.map(item => item.id);
+            console.log("hi",lessonsids); 
+            
+          }
+        setCourseInfo(response.data); // Assuming the response data is the array of course IDs
         }catch (error) {
           console.error('Failed to fetch courseInfo', error);
         }
       }
-      const fetchCourselessonInfo = async() => {      // try to dump the courses' lesson id
-        try{
-          const response = await getAllLesson(4);
-          const lessonsids = response.data.map(item => item.id);
-          console.log("hi",lessonsids);  
-
-        }catch(error){
-          console.error('Failed to fetch lessons', error);
-        }
-
-      }
-
-      
+    
       fetchCourseInfo();
-      fetchCourselessonInfo();
-
-
-
-
-
-      }   
-      fetchUserCourse();
+      // fetchUserCourse();
+      
     }, []);
 
 
