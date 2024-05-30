@@ -47,8 +47,7 @@ const Home = () => {
       }
     
       fetchCourseInfo();
-      // fetchUserCourse();
-      
+      // fetchUserCourse()
     }, []);
 
 
