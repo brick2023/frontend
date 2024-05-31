@@ -8,7 +8,7 @@ const Srt = ({ srt, lesson_id, course_id}) => {
     const navigate = useNavigate();
     // If the srt is clicked, navigate to the video page and pass lesson_id and course_id.
     const handleSrtClick = () => {
-        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id }});
+        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, time: srt[0] }});
         navigate(0);
     }
 
@@ -38,6 +38,11 @@ var id_image_exist_dict = {};
 
 const VideoCard = ({expand, title, id, course_id, srt}) => {
     const [image, setImage] = useState('');
+    const navigate = useNavigate();
+    const handleOnClick = () => {
+        navigate('/video', { state: { lesson_id: id, course_id: course_id }});
+        navigate(0);
+    }
     
 
     const fetchImage = async () => {
@@ -55,7 +60,7 @@ const VideoCard = ({expand, title, id, course_id, srt}) => {
 
     if (id_image_exist_dict[id]) {
         return (
-            <div className='video-card'>
+            <div className='video-card' onClick={handleOnClick}>
                 <img className='video-thumbnail' src={id_image_exist_dict[id]} alt='video-thumbnail' />
                 <div className='video-description'>
                     <h3><b> {title} </b></h3>
@@ -65,10 +70,9 @@ const VideoCard = ({expand, title, id, course_id, srt}) => {
         );
     }
     fetchImage();
-    console.log(image);
 
     return (
-        <div className='video-card'>
+        <div className='video-card' onClick={handleOnClick}>
             <img className='video-thumbnail' src={image} alt='video-thumbnail' />
             <div className='video-description'>
                 <h3><b> {title} </b></h3>

@@ -42,6 +42,8 @@ const VideoPage = () => {
     const [lastSummary, setLastSummary] = useState('');
     const [lessonInfo, setLessonInfo] = useState({});
     const [relatedLessons, setRelatedLessons] = useState([]);
+    const [videoTime, setVideoTime] = useState(0);
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
 
     const playerRef = useRef(null);
     useNavigate(0);
@@ -102,6 +104,9 @@ const VideoPage = () => {
                 //setVideoTime(total);
                 // This is an instance function that can be called to seek to a specific point in the video.
                 playerRef.current.seekTo(total, 'seconds');
+                setVideoTime(total);
+                playerRef.current.seekTo(total, 'seconds');
+                console.log('videoTime:', videoTime);
             } catch (error) {
                 console.error('Error fetching or processing video:', error);
             }
@@ -116,13 +121,12 @@ const VideoPage = () => {
             }
         }
 
-        
         fetchLessonInfo();
         fetchRelatedLessons();
         fetchVideo();
         fetchVideoName();
         fetchVideoTime();
-        fetchLastSummary();
+        // fetchLastSummary();
     }, [location.state.lesson_id, location.state.course_id]);
 
     const handlePause = () => {
@@ -134,6 +138,15 @@ const VideoPage = () => {
         recordTime(location.state.lesson_id,main);
         console.log('影片已暫停',main);
     };
+
+    const handleReady = () => { 
+        
+        if (isFirstLoad) {
+            playerRef.current.seekTo(videoTime, 'seconds');
+            setIsFirstLoad(false);
+            console.log('video is ready');
+        }
+    }
 
     return (
         <div className="video-container">
@@ -148,6 +161,7 @@ const VideoPage = () => {
                         width="100%"
                         height="100%"
                         onPause={handlePause}
+                        onReady={handleReady}
                     />
                 </div>
                 <div className="video-title">
