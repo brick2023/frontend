@@ -101,12 +101,9 @@ const VideoPage = () => {
                 const [hours, minutes, seconds] = videoTime.split(':').map(parseFloat);
                 const total = hours * 3600 + minutes * 60 + seconds;
                 console.log('Time',total);
-                //setVideoTime(total);
                 // This is an instance function that can be called to seek to a specific point in the video.
-                playerRef.current.seekTo(total, 'seconds');
+                // playerRef.current.seekTo(total, 'seconds');
                 setVideoTime(total);
-                playerRef.current.seekTo(total, 'seconds');
-                console.log('videoTime:', videoTime);
             } catch (error) {
                 console.error('Error fetching or processing video:', error);
             }
