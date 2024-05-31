@@ -4,30 +4,39 @@ import { searchKeyword, searchSrt, getImage} from "api/search";
 import './style.css';
 
 
-const Srt = ({ srt, lesson_id, course_id}) => {
+const Srt = ({ srt, summary, lesson_id, course_id, srtOrSummary}) => {
     const navigate = useNavigate();
     // If the srt is clicked, navigate to the video page and pass lesson_id and course_id.
     const handleSrtClick = () => {
         navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, time: srt[0], clickFromSrt: true}});
         navigate(0);
     }
-
-    return (
-        <div className='srt-content'>
-            <div className='srt-content' onClick={handleSrtClick}>
-                {srt[0] + ' ' + srt[1]}
+    if (srtOrSummary) {
+        return (
+            <div className='srt-content'>
+                <div className='srt-content' onClick={handleSrtClick}>
+                    {srt[0] + ' ' + srt[1]}
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return (
+            <div className='srt-content'>
+                <div className='srt-content' onClick={handleSrtClick}>
+                    {summary}
+                </div>
+            </div>
+        );
+    }
 }
 
 // Video srt component
-const Srts = ({srts, lesson_id, course_id}) => {
+const Srts = ({srts, summary, lesson_id, course_id, srtOrSummary}) => {
     return (
         <div className='video-srt'>
             { srts.map((srt, index) => {
                 return (
-                    <Srt srt={srt} lesson_id={lesson_id} course_id={course_id} key={index}/>
+                    <Srt srt={srt} summary={summary} lesson_id={lesson_id} course_id={course_id} key={index} srtOrSummary={srtOrSummary}/>
                 );
             })}
         </div>
@@ -36,7 +45,7 @@ const Srts = ({srts, lesson_id, course_id}) => {
 
 var id_image_exist_dict = {};
 
-const VideoCard = ({expand, title, id, course_id, srt}) => {
+const VideoCard = ({expand, title, id, course_id, srt, summary, srtOrSummary}) => {
     const [image, setImage] = useState('');
     const navigate = useNavigate();
     const handleOnClick = () => {
@@ -65,7 +74,7 @@ const VideoCard = ({expand, title, id, course_id, srt}) => {
                 <div className='video-description' onClick={handleOnClick}>
                     <h3><b> {title} </b></h3>
                 </div>
-                {expand ? <Srts srts={srt} lesson_id={id} course_id={course_id} /> : null}
+                {expand ? <Srts srts={srt} summary={summary} lesson_id={id} course_id={course_id} srtOrSummary={srtOrSummary}/> : null}
             </div>
         );
     }
@@ -96,6 +105,7 @@ const SearchPage = () => {
     const [searchSummary, setSearchSummary] = useState('');
     const [srts, setSrts] = useState([]);
     const [isExpand, setIsExpand] = useState(true);
+    const [srtOrSummary, setSrtOrSummary] = useState(true);
 
     // Use useEffect to fetch data from search api and update the searchSummary state
     useEffect(() => {
@@ -131,11 +141,14 @@ const SearchPage = () => {
                 <button className='control-button' onClick={ () => setIsExpand(!isExpand) }>
                     展開/收合
                 </button>
+                <button className='control-button-summary-srt' onClick={ () => setSrtOrSummary(!srtOrSummary) }>
+                    {srtOrSummary ? '顯示字幕' : '顯示摘要'}
+                </button>
             </div>
             <div className='video-card-container'>
                 { srts.map((srt) => {
                     return (<VideoCard expand={isExpand} 
-                        title={srt.name} id={srt.id} course_id={srt.course_id} srt={srt.srt} key={srt.id} />);
+                        title={srt.name} id={srt.id} course_id={srt.course_id} srt={srt.srt} key={srt.id} summary={srt.summary} srtOrSummary={srtOrSummary} />);
                 })}
             </div>
             
