@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import {useNavigate, useLocation } from "react-router-dom";
 import ReactPlayer from "react-player";
-import { getVideo, getName, getTime } from "api/video";
+import { getVideo, getName, getTime, getLastSummary, recordTime } from "api/video";
 import { getLessonInfo, getAllLesson } from "api/course";
 import Chatbot from "components/ChatBot/chatbot";
 import "./style.css";
@@ -39,7 +39,7 @@ const VideoPage = () => {
 
     const [videoUrl, setVideoUrl] = useState('');
     const [videoName, setVideoName] = useState('');
-    //const [videoTime, setVideoTime] = useState('');
+    const [lastSummary, setLastSummary] = useState('');
     const [lessonInfo, setLessonInfo] = useState({});
     const [relatedLessons, setRelatedLessons] = useState([]);
 
@@ -94,6 +94,7 @@ const VideoPage = () => {
             try {
                 console.log('fetch vidoe time')
                 const Time  = await getTime(location.state.lesson_id);
+                console.log('Time = ',Time);
                 const videoTime = Time.data;
                 const [hours, minutes, seconds] = videoTime.split(':').map(parseFloat);
                 const total = hours * 3600 + minutes * 60 + seconds;
@@ -105,12 +106,34 @@ const VideoPage = () => {
                 console.error('Error fetching or processing video:', error);
             }
         }
+        const fetchLastSummary = async() => {
+            try {
+                const SummaryInfo = await getLastSummary(location.state.lesson_id);
+                setLastSummary(SummaryInfo.data);
+                console.log('fetch last time summary:',SummaryInfo.data)             
+            } catch (error) {
+                console.error('Error fetching last time summary:', error);
+            }
+        }
+
+        
         fetchLessonInfo();
         fetchRelatedLessons();
         fetchVideo();
         fetchVideoName();
         fetchVideoTime();
+        fetchLastSummary();
     }, [location.state.lesson_id, location.state.course_id]);
+
+    const handlePause = () => {
+        const seconds = playerRef.current.getCurrentTime();
+        const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+        const secs = String(Math.floor(seconds % 60)).padStart(2, '0');
+        const main = hrs + ':' + mins + ':' + secs;
+        recordTime(location.state.lesson_id,main);
+        console.log('影片已暫停',main);
+    };
 
     return (
         <div className="video-container">
@@ -124,6 +147,7 @@ const VideoPage = () => {
                         preload="auto"
                         width="100%"
                         height="100%"
+                        onPause={handlePause}
                     />
                 </div>
                 <div className="video-title">
@@ -137,6 +161,10 @@ const VideoPage = () => {
                     <p className="lesson-content-text"> 課程內容 : </p>
                     <div className="lesson-content">
                         { lessonInfo.srt === '' ? '本課程暫無內容' : lessonInfo.srt }
+                    </div>
+                    <p className="lesson-content-text"> 前情提要: </p>
+                    <div className="lesson-content">
+                        { lastSummary === '未有觀看紀錄' ? '未有觀看紀錄' : lastSummary }
                     </div>
                 </div>
             </div>
