@@ -4,24 +4,44 @@ import ReactPlayer from "react-player";
 import { getVideo, getName, getTime, getLastSummary, recordTime } from "api/video";
 import { getLessonInfo, getAllLesson } from "api/course";
 import Chatbot from "components/ChatBot/chatbot";
+import { getImage } from "api/search";
 import "./style.css";
 
 // The usage of useLocation can see this issue on stackoverflow
 // https://stackoverflow.com/questions/64566405/react-router-dom-v6-usenavigate-passing-value-to-another-component
 
+var id_image_exist_dict = {};
+
 const Lessons = ({ lesson_id, lesson_name, course_id }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [image, setImage] = useState('');
 
     const handleLessonClick = () => {
         navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, clickFromSrt: false}});
         navigate(0);
     }
 
+    const fetchImage = async () => {
+        console.log('fetch image');
+        try {
+            const response = await getImage(lesson_id); // Pass lesson_id instead of a fixed value
+            const blobURL = URL.createObjectURL(response.data);
+            setImage(blobURL);
+            console.log(blobURL);
+            id_image_exist_dict[lesson_id] = blobURL;
+        } catch (error) {
+            console.error('Error fetching image:', error);
+        }
+    };
+
+    fetchImage();
+    
+
     return (
         <div className="other-lesson-content">
             <div className="img-container" onClick={handleLessonClick}>
-                <img src="https://cdn-icons-png.flaticon.com/512/1926/1926769.png" width={'100%'} alt="img" />
+                <img src={image} alt='video-thumbnail' width={'100%'}/>
             </div>
             <div className="other-lesson-info">
                 <p className="other-lesson-info-text">Lesson ID : {lesson_id}</p>
