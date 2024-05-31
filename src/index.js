@@ -7,10 +7,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <App />
-  </React.StrictMode>
-  // 之後要部署的時候，把strict mode拿掉
 );
 
 

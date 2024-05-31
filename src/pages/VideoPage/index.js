@@ -4,24 +4,44 @@ import ReactPlayer from "react-player";
 import { getVideo, getName, getTime, getLastSummary, recordTime } from "api/video";
 import { getLessonInfo, getAllLesson } from "api/course";
 import Chatbot from "components/ChatBot/chatbot";
+import { getImage } from "api/search";
 import "./style.css";
 
 // The usage of useLocation can see this issue on stackoverflow
 // https://stackoverflow.com/questions/64566405/react-router-dom-v6-usenavigate-passing-value-to-another-component
 
+var id_image_exist_dict = {};
+
 const Lessons = ({ lesson_id, lesson_name, course_id }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [image, setImage] = useState('');
 
     const handleLessonClick = () => {
-        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id }});
+        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, clickFromSrt: false}});
         navigate(0);
     }
+
+    const fetchImage = async () => {
+        console.log('fetch image');
+        try {
+            const response = await getImage(lesson_id); // Pass lesson_id instead of a fixed value
+            const blobURL = URL.createObjectURL(response.data);
+            setImage(blobURL);
+            console.log(blobURL);
+            id_image_exist_dict[lesson_id] = blobURL;
+        } catch (error) {
+            console.error('Error fetching image:', error);
+        }
+    };
+
+    fetchImage();
+    
 
     return (
         <div className="other-lesson-content">
             <div className="img-container" onClick={handleLessonClick}>
-                <img src="https://cdn-icons-png.flaticon.com/512/1926/1926769.png" width={'100%'} alt="img" />
+                <img src={image} alt='video-thumbnail' width={'100%'}/>
             </div>
             <div className="other-lesson-info">
                 <p className="other-lesson-info-text">Lesson ID : {lesson_id}</p>
@@ -42,6 +62,8 @@ const VideoPage = () => {
     const [lastSummary, setLastSummary] = useState('');
     const [lessonInfo, setLessonInfo] = useState({});
     const [relatedLessons, setRelatedLessons] = useState([]);
+    const [videoTime, setVideoTime] = useState(0);
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
 
     const playerRef = useRef(null);
     useNavigate(0);
@@ -99,9 +121,9 @@ const VideoPage = () => {
                 const [hours, minutes, seconds] = videoTime.split(':').map(parseFloat);
                 const total = hours * 3600 + minutes * 60 + seconds;
                 console.log('Time',total);
-                //setVideoTime(total);
                 // This is an instance function that can be called to seek to a specific point in the video.
-                playerRef.current.seekTo(total, 'seconds');
+                // playerRef.current.seekTo(total, 'seconds');
+                setVideoTime(total);
             } catch (error) {
                 console.error('Error fetching or processing video:', error);
             }
@@ -116,13 +138,12 @@ const VideoPage = () => {
             }
         }
 
-        
         fetchLessonInfo();
         fetchRelatedLessons();
         fetchVideo();
         fetchVideoName();
         fetchVideoTime();
-        fetchLastSummary();
+        // fetchLastSummary();
     }, [location.state.lesson_id, location.state.course_id]);
 
     const handlePause = () => {
@@ -134,6 +155,23 @@ const VideoPage = () => {
         recordTime(location.state.lesson_id,main);
         console.log('影片已暫停',main);
     };
+
+    const handleReady = () => { 
+        
+        if (isFirstLoad) {
+            playerRef.current.seekTo(videoTime, 'seconds');
+            setIsFirstLoad(false);
+            console.log('video is ready');
+            console.log('videoTime:', videoTime);  
+            if (location.state.clickFromSrt) {
+                // calculate // xx:xx:xx -> seconds
+                const total = location.state.time.split(':').reduce((acc, time) => (60 * acc) + +time);
+                console.log('seek to', location.state.time);
+                console.log('seek to', total);
+                playerRef.current.seekTo(total, 'seconds');
+            }
+        }
+    }
 
     return (
         <div className="video-container">
@@ -148,6 +186,7 @@ const VideoPage = () => {
                         width="100%"
                         height="100%"
                         onPause={handlePause}
+                        onReady={handleReady}
                     />
                 </div>
                 <div className="video-title">
