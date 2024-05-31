@@ -14,7 +14,7 @@ const Lessons = ({ lesson_id, lesson_name, course_id }) => {
     const location = useLocation();
 
     const handleLessonClick = () => {
-        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id }});
+        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, clickFromSrt: false}});
         navigate(0);
     }
 
@@ -145,6 +145,14 @@ const VideoPage = () => {
             playerRef.current.seekTo(videoTime, 'seconds');
             setIsFirstLoad(false);
             console.log('video is ready');
+            console.log('videoTime:', videoTime);  
+            if (location.state.clickFromSrt) {
+                // calculate // xx:xx:xx -> seconds
+                const total = location.state.time.split(':').reduce((acc, time) => (60 * acc) + +time);
+                console.log('seek to', location.state.time);
+                console.log('seek to', total);
+                playerRef.current.seekTo(total, 'seconds');
+            }
         }
     }
 

@@ -8,7 +8,7 @@ const Srt = ({ srt, lesson_id, course_id}) => {
     const navigate = useNavigate();
     // If the srt is clicked, navigate to the video page and pass lesson_id and course_id.
     const handleSrtClick = () => {
-        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, time: srt[0] }});
+        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, time: srt[0], clickFromSrt: true}});
         navigate(0);
     }
 
@@ -40,7 +40,7 @@ const VideoCard = ({expand, title, id, course_id, srt}) => {
     const [image, setImage] = useState('');
     const navigate = useNavigate();
     const handleOnClick = () => {
-        navigate('/video', { state: { lesson_id: id, course_id: course_id }});
+        navigate('/video', { state: { lesson_id: id, course_id: course_id, clickFromSrt: false}});
         navigate(0);
     }
     
@@ -60,9 +60,9 @@ const VideoCard = ({expand, title, id, course_id, srt}) => {
 
     if (id_image_exist_dict[id]) {
         return (
-            <div className='video-card' onClick={handleOnClick}>
-                <img className='video-thumbnail' src={id_image_exist_dict[id]} alt='video-thumbnail' />
-                <div className='video-description'>
+            <div className='video-card' >
+                <img className='video-thumbnail' src={id_image_exist_dict[id]} alt='video-thumbnail' onClick={handleOnClick}/>
+                <div className='video-description' onClick={handleOnClick}>
                     <h3><b> {title} </b></h3>
                 </div>
                 {expand ? <Srts srts={srt} lesson_id={id} course_id={course_id} /> : null}
@@ -72,9 +72,9 @@ const VideoCard = ({expand, title, id, course_id, srt}) => {
     fetchImage();
 
     return (
-        <div className='video-card' onClick={handleOnClick}>
-            <img className='video-thumbnail' src={image} alt='video-thumbnail' />
-            <div className='video-description'>
+        <div className='video-card' >
+            <img className='video-thumbnail' src={image} alt='video-thumbnail' onClick={handleOnClick}/>
+            <div className='video-description'onClick={handleOnClick} >
                 <h3><b> {title} </b></h3>
             </div>
             {expand ? <Srts srts={srt} lesson_id={id} course_id={course_id} /> : null}
