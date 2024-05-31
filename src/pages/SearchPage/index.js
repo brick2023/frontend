@@ -11,6 +11,10 @@ const Srt = ({ srt, summary, lesson_id, course_id, srtOrSummary}) => {
         navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, time: srt[0], clickFromSrt: true}});
         navigate(0);
     }
+    const handleSummaryClick = () => {
+        navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, clickFromSrt: false}});
+        navigate(0);
+    }
     if (srtOrSummary) {
         return (
             <div className='srt-content'>
@@ -22,7 +26,7 @@ const Srt = ({ srt, summary, lesson_id, course_id, srtOrSummary}) => {
     } else {
         return (
             <div className='srt-content'>
-                <div className='srt-content' onClick={handleSrtClick}>
+                <div className='srt-content' onClick={handleSummaryClick}>
                     {summary}
                 </div>
             </div>
