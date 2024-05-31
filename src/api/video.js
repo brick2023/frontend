@@ -12,4 +12,5 @@ export const getVideo = (videoId) => videoApi.get("/" + videoId, { responseType:
 export const getTime = (videoId) => videoApi.get("/time/" + videoId);
 export const recordTime = (videoId, timestamp) => videoApi.get("/record_time/" + videoId + "/" + timestamp);
 export const getName = (videoId) => videoApi.get("/get_name/" + videoId);
+export const getLastSummary = (videoId) => videoApi.get("/summary/" + videoId);
 export default videoApi;
