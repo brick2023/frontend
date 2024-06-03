@@ -173,6 +173,42 @@ const VideoPage = () => {
         }
     }
 
+    const srtFormat = (srt) => {
+        try {
+            const lines = srt.split('\n');
+            // 在每個時間點點擊時，要跳到該時間點
+            const handleClickTimeline = (time) => {
+                const [hours, minutes, seconds] = time.split(':').map(parseFloat);
+                const total = hours * 3600 + minutes * 60 + seconds;
+                playerRef.current.seekTo(total, 'seconds');
+            }
+
+            let result = '';
+            for (let i = 0; i < lines.length; i++) {
+                if (i % 4 === 1) {
+                    const time = lines[i].split(' --> ')[0].split(',')[0];//.slice(3);
+                    const text = lines[i + 1];
+                    result += `${time} ${text}\n`;
+                }
+            }
+            return (<div>
+                {result.split('\n').map((line, index) => {
+                    return <p className="srt-content-videopage"
+                    key={index} 
+                    onClick={() => handleClickTimeline(line.split(' ')[0])}
+                    >
+                        {line}
+                    </p>;
+                }
+                )}
+                </div>);
+            
+        } catch (error) {
+            console.error('Error processing srt:', error);
+            return "操" + srt;
+        }
+    }
+
     return (
         <div className="video-container">
             <div className="video-info">
@@ -199,7 +235,7 @@ const VideoPage = () => {
                     </div>
                     <p className="lesson-content-text"> 課程內容 : </p>
                     <div className="lesson-content">
-                        { lessonInfo.srt === '' ? '本課程暫無內容' : lessonInfo.srt }
+                        { lessonInfo.srt === '' ? '本課程暫無內容' : srtFormat(lessonInfo.srt) }
                     </div>
                     <p className="lesson-content-text"> 前情提要: </p>
                     <div className="lesson-content">
