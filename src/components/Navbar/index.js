@@ -81,15 +81,16 @@ const Navbar = ({isLogin, setIsLogin}) => {
     }
 
     return <div>
-        <nav className="navbar navbar-design">
-            <div className="container-fluid">
+        <div className="navbar-space"></div>
+        <nav className="navbar-design">
+            <div className="navbar-content" >
                 <div className="navbar-brand" onClick={handleBackToHome}>
                     <img src="https://cdn-icons-png.flaticon.com/128/3698/3698586.png" alt="Logo" className="navbar-llama" />
                     <p className="navbar-title">NCKU Self-Learning</p>
                 </div>
 
                 { isLogin ?
-                <form onSubmit={search}>
+                <form onSubmit={search} className="search-container">
                     <input name="query" placeholder="Search" className="search-form-design" />
                     <button type="submit" className="search-button">
                         <img className="search-icon" src="https://cdn-icons-png.flaticon.com/512/10385/10385257.png" alt="Search" />

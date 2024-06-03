@@ -101,3 +101,12 @@
     font-weight: bold;
     color: #fff398;
 }
+
+.srt-content-videopage:hover {
+    color: #ef6400;
+    text-decoration: underline;
+}
+
+.srt-content-videopage {
+    cursor: pointer;
+}

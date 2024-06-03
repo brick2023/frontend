@@ -1,6 +1,6 @@
 import React , { useState, useEffect }from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+//import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 // import Chatbot from './chatbot';
 import {getCourseInfo, getLessons ,getLessonForCourse, getAllLesson, fetchUserCourse} from "api/course"; 
 import { getImage } from "api/search";
@@ -121,53 +121,30 @@ const Home = () => {
 
     return (
         <div style={{ display: 'flex', minHeight: '85vh'}}>
-          <Sidebar backgroundColor="#FFF1C0">
-            <Menu>
-              <SubMenu label="Course 1">
-                <MenuItem> Lesson 1 </MenuItem>
-                <MenuItem> Lesson 2 </MenuItem>
-                <MenuItem> Lesson 3 </MenuItem>
-              </SubMenu>
-              <SubMenu label="Course 2">
-                <MenuItem> Lesson 1 </MenuItem>
-                <MenuItem> Lesson 2 </MenuItem>
-              </SubMenu>
-              <SubMenu label="Course 3">
-                <MenuItem> Lesson 1 </MenuItem>
-                <MenuItem> Lesson 2 </MenuItem>
-                <MenuItem> Lesson 3 </MenuItem>
-                <MenuItem> Lesson 4 </MenuItem>
-              </SubMenu>
-            </Menu>
-          </Sidebar>
-          <main style={{ padding: 10 }}> 
-            <div className='courses' style={{ marginLeft:40 ,marginBottom:100}}>
-                <main style={{ padding: 10 }}> 
-                  <div className='courses' style={{ marginLeft: 40, marginBottom: 100 }}>
-                    {courseInfo.map(course => (
-                      <div className='courseCard' style={{ display: 'flex', flexDirection: 'column', marginTop: 50 }} key={course.id}>
-                        <h2 style={{ textAlign: 'left', marginBottom: 10, textShadow: '2px 2px 1px rgba(0,0,0,0.2)', marginLeft: 70 }}>
-                          {course.course_name} course_id: {course.course_id}
-                          <span onClick={() => handleToggleExpand(course.id)} style={{ cursor: 'pointer', marginLeft: 10 }}>
-                            {expandedStates[course.id]? <span>&#9662;</span> : <span>&#9652;</span>}
-                          </span>
-                        </h2>
-                        {expandedStates[course.id] && (
-                          <div className='videoRow' style={{ display: 'flex', overflowX: 'auto', maxWidth: '1240px', marginLeft: 70, scrollbarWidth: 'thin', scrollbarColor: '#d4cdcd #e0e0e0' }}>
-                            {courseLessonDict[course.course_id].map(lessonId => (
-                              <VideoCard title={`${id_name_dict[lessonId]}`} id={lessonId} course_id={course.course_id} summary={id_summary_dict[lessonId]} expand={true} key={lessonId} />
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </main>
-
-            </div>
-            
+          <div className='courses' style={{ marginLeft:40 ,marginBottom:100}}>
+              <main style={{ padding: 10 }}> 
+                <div className='courses' style={{ marginLeft: 40, marginBottom: 100 }}>
+                  {courseInfo.map(course => (
+                    <div className='courseCard' style={{ display: 'flex', flexDirection: 'column', marginTop: 50 }} key={course.id}>
+                      <h2 style={{ textAlign: 'left', marginBottom: 10, textShadow: '2px 2px 1px rgba(0,0,0,0.2)', marginLeft: 70 }}>
+                        {course.course_name} course_id: {course.course_id}
+                        <span onClick={() => handleToggleExpand(course.id)} style={{ cursor: 'pointer', marginLeft: 10 }}>
+                          {expandedStates[course.id]? <span>&#9662;</span> : <span>&#9652;</span>}
+                        </span>
+                      </h2>
+                      {expandedStates[course.id] && (
+                        <div className='videoRow' style={{ display: 'flex', overflowX: 'auto', maxWidth: '1240px', marginLeft: 70, scrollbarWidth: 'thin', scrollbarColor: '#d4cdcd #e0e0e0' }}>
+                          {courseLessonDict[course.course_id].map(lessonId => (
+                            <VideoCard title={`${id_name_dict[lessonId]}`} id={lessonId} course_id={course.course_id} summary={id_summary_dict[lessonId]} expand={true} key={lessonId} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </main>
+          </div>
             {/* <Chatbot /> */}
-          </main>
         </div>
     );
 };
