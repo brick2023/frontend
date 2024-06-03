@@ -32,12 +32,15 @@ const VideoCard = ({expand, title, id, course_id, summary}) => {
 
   if (id_image_exist_dict[id]) {
       return (
-          <div className='video-card' onClick={handleVideoCardClick}>
-              <img className='video-thumbnail' src={id_image_exist_dict[id]} alt='video-thumbnail' />
-              <div className='video-description'>
+          <div className='video-card-home' onClick={handleVideoCardClick} style={{padding: "20px"}}>
+              <img className='video-thumbnail-home' src={id_image_exist_dict[id]} alt='video-thumbnail-home' />
+              <div className='video-description-home'>
                   <h3><b> {title} </b></h3>
               </div>
+              <div className='video-srt'>
               {summary}
+              </div>
+              
           </div>
       );
   }
@@ -45,9 +48,9 @@ const VideoCard = ({expand, title, id, course_id, summary}) => {
   console.log(image);
 
   return (
-      <div className='video-card' onClick={handleVideoCardClick} >
-          <img className='video-thumbnail' src={image} alt='video-thumbnail'/>
-          <div className='video-description'>
+      <div className='video-card-home' onClick={handleVideoCardClick} >
+          <img className='video-thumbnail-home' src={image} alt='video-thumbnail-home'/>
+          <div className='video-description-home'>
               <h3><b> {title} </b></h3>
           </div>
           {/* {expand ? <Srts srts={srt} lesson_id={id} course_id={course_id} /> : null} */}
@@ -127,13 +130,13 @@ const Home = () => {
                   {courseInfo.map(course => (
                     <div className='courseCard' style={{ display: 'flex', flexDirection: 'column', marginTop: 50 }} key={course.id}>
                       <h2 style={{ textAlign: 'left', marginBottom: 10, textShadow: '2px 2px 1px rgba(0,0,0,0.2)', marginLeft: 70 }}>
-                        {course.course_name} course_id: {course.course_id}
+                        {course.course_name}
                         <span onClick={() => handleToggleExpand(course.id)} style={{ cursor: 'pointer', marginLeft: 10 }}>
                           {expandedStates[course.id]? <span>&#9662;</span> : <span>&#9652;</span>}
                         </span>
                       </h2>
                       {expandedStates[course.id] && (
-                        <div className='videoRow' style={{ display: 'flex', overflowX: 'auto', maxWidth: '1240px', marginLeft: 70, scrollbarWidth: 'thin', scrollbarColor: '#d4cdcd #e0e0e0' }}>
+                        <div className='videoRow' style={{ display: 'flex', overflowX: 'auto', maxWidth: '1340px', marginLeft: 70, scrollbarWidth: 'thin', scrollbarColor: '#d4cdcd #e0e0e0' }}>
                           {courseLessonDict[course.course_id].map(lessonId => (
                             <VideoCard title={`${id_name_dict[lessonId]}`} id={lessonId} course_id={course.course_id} summary={id_summary_dict[lessonId]} expand={true} key={lessonId} />
                           ))}

@@ -74,3 +74,26 @@
 .circle-img-4 {
     background-color: #CDC196;
 }
+
+.video-card-home {
+    width: 350px;
+    padding: 25px 20px 25px 20px;
+    background-color: #e6e6e6;
+    border-radius: 15px;
+    margin-left: 20px;
+    /* 限制高度在 500px */
+    max-height: 450px;
+    /* 寬度至少要 350px */
+    min-width: 350px;
+}
+
+.video-thumbnail-home {
+    width: 100%;
+    height: auto;
+}
+.video-description-home {
+    margin-top: 20px;
+    font-size: 18px;
+    max-height: 500px;
+    /* color: #818181; */
+}
