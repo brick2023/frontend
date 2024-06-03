@@ -16,6 +16,7 @@ const Lessons = ({ lesson_id, lesson_name, course_id }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [image, setImage] = useState('');
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
 
     const handleLessonClick = () => {
         navigate('/video', { state: { lesson_id: lesson_id, course_id: course_id, clickFromSrt: false}});
@@ -34,9 +35,11 @@ const Lessons = ({ lesson_id, lesson_name, course_id }) => {
             console.error('Error fetching image:', error);
         }
     };
-
-    fetchImage();
     
+    if (isFirstLoad) {
+        fetchImage();
+        setIsFirstLoad(false);
+    }
 
     return (
         <div className="other-lesson-content">
