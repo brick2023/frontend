@@ -146,7 +146,7 @@ const VideoPage = () => {
         fetchVideo();
         fetchVideoName();
         fetchVideoTime();
-        // fetchLastSummary();
+        fetchLastSummary();
     }, [location.state.lesson_id, location.state.course_id]);
 
     const handlePause = () => {
