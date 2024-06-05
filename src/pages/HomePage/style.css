@@ -75,22 +75,46 @@
     background-color: #CDC196;
 }
 
+.courseCard {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    width: 100%;
+}
+
+.videoRow {
+    display: flex;
+    overflow-x: auto;
+    max-width: 1340px;
+    margin-left: 70px;
+    padding-bottom: 5px;
+    scrollbar-width: thin;
+    scrollbar-color: #d4cdcd #e0e0e0;
+    overflow-y: hidden;
+}
+
 .video-card-home {
     width: 350px;
     padding: 25px 20px 25px 20px;
     background-color: #e6e6e6;
     border-radius: 15px;
     margin-left: 20px;
-    /* 限制高度在 500px */
-    max-height: 450px;
+    /* 限制高度在 480px */
+    max-height: 480px;
     /* 寬度至少要 350px */
     min-width: 350px;
+}
+
+.video-card-home:hover {
+    box-shadow: 2px 2px 5px rgb(155, 155, 155);
+    cursor: pointer;
 }
 
 .video-thumbnail-home {
     width: 100%;
     height: auto;
 }
+
 .video-description-home {
     margin-top: 20px;
     font-size: 18px;
