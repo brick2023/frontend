@@ -36,15 +36,24 @@ const Srt = ({ srt, summary, lesson_id, course_id, srtOrSummary}) => {
 
 // Video srt component
 const Srts = ({srts, summary, lesson_id, course_id, srtOrSummary}) => {
-    return (
-        <div className='video-srt'>
-            { srts.map((srt, index) => {
-                return (
-                    <Srt srt={srt} summary={summary} lesson_id={lesson_id} course_id={course_id} key={index} srtOrSummary={srtOrSummary}/>
-                );
-            })}
-        </div>
-    );
+    if (srtOrSummary) {
+        return (
+            <div className='video-srt'>
+                { srts.map((srt, index) => {
+                    return (
+                        <Srt srt={srt} summary={summary} lesson_id={lesson_id} course_id={course_id} key={index} srtOrSummary={srtOrSummary}/>
+                    );
+                })}
+            </div>
+        );
+    } else {
+        return (
+            <div className='video-srt'>
+                <Srt srt={srts[0]} summary={summary} lesson_id={lesson_id} course_id={course_id} srtOrSummary={srtOrSummary}/>
+            </div>
+        );
+    
+    }
 }
 
 var id_image_exist_dict = {};
